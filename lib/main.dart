@@ -117,37 +117,46 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             validator: (val) =>
                 val.trim().isNotEmpty ? null : "Location is required",
           ),
-          SizedBox(height: 15,),
-          Text("Work Status:", style: Theme.of(context).textTheme.subhead  ,),
-          RadioListTile<WorkStatus>(
-            title: const Text('Looking'),
-            value: WorkStatus.looking,
-            groupValue: _workStatus,
-            onChanged: (WorkStatus value) {
-              setState(() {
-                _workStatus = value;
-              });
-            },
+          SizedBox(
+            height: 15,
           ),
-          RadioListTile<WorkStatus>(
-            title: const Text('Hiring'),
-            value: WorkStatus.hiring,
-            groupValue: _workStatus,
-            onChanged: (WorkStatus value) {
-              setState(() {
-                _workStatus = value;
-              });
-            },
+          Text(
+            "Work Status:",
+            style: Theme.of(context).textTheme.subhead,
           ),
-          RadioListTile<WorkStatus>(
-            title: const Text('Working'),
-            value: WorkStatus.working,
-            groupValue: _workStatus,
-            onChanged: (WorkStatus value) {
-              setState(() {
-                _workStatus = value;
-              });
-            },
+          Row(
+            children: <Widget>[
+              Radio(
+                value: WorkStatus.looking,
+                groupValue: _workStatus,
+                onChanged: (WorkStatus value) {
+                  setState(() {
+                    _workStatus = value;
+                  });
+                },
+              ),
+              Text('Looking'),
+              Radio(
+                value: WorkStatus.hiring,
+                groupValue: _workStatus,
+                onChanged: (WorkStatus value) {
+                  setState(() {
+                    _workStatus = value;
+                  });
+                },
+              ),
+              Text('Hiring'),
+              Radio(
+                value: WorkStatus.working,
+                groupValue: _workStatus,
+                onChanged: (WorkStatus value) {
+                  setState(() {
+                    _workStatus = value;
+                  });
+                },
+              ),
+              Text('Working'),
+            ],
           ),
         ],
       ),
