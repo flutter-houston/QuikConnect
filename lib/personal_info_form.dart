@@ -16,21 +16,24 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   var _emailController = TextEditingController();
   var _locationController = TextEditingController();
   WorkStatus _workStatus;
-@override
+  var formKey = GlobalKey<FormState>();
+  @override
   void initState() {
-    if(user != null){
+    if (user != null) {
       //setup our user data for editing
-       _firstNameController.text = user.firstName ?? "";
-         _lastNameController.text= user.lastName ?? "";
-         _emailController.text= user.email ?? "";
-         _locationController.text= user.firstName ?? "";
-         _workStatus= user.workStatus ?? null;
+      _firstNameController.text = user.firstName ?? "";
+      _lastNameController.text = user.lastName ?? "";
+      _emailController.text = user.email ?? "";
+      _locationController.text = user.firstName ?? "";
+      _workStatus = user.workStatus ?? null;
     }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: formKey,
       child: ListView(
         children: <Widget>[
           TextFormField(
@@ -129,6 +132,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   }
 
   _submitForm() {
+    if (!formKey.currentState.validate()) return;
+    formKey.currentState.save();
     var _user = User(
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,

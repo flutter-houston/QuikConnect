@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:quick_connect/personal_info_form.dart';
 import 'package:quick_connect/quik_connect_icons.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends StatelessWidget {
   ProfilePage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         child: Padding(padding: EdgeInsets.all(15), child: PersonalInfoForm()),
