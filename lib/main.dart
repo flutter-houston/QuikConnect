@@ -11,15 +11,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Quik Connect',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Quik Connect Home Page'),
@@ -53,13 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child:  Padding(padding: EdgeInsets.all(15),child: PersonalInfoForm()),
+        child: Padding(padding: EdgeInsets.all(15), child: PersonalInfoForm()),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _scanCode,
         tooltip: 'Scan QR Code',
         child: Icon(QuikConnect.qrcode_scan),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 
@@ -72,16 +63,17 @@ class PersonalInfoForm extends StatefulWidget {
   _PersonalInfoFormState createState() => _PersonalInfoFormState();
 }
 
+enum WorkStatus { looking, hiring, working }
+
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
   var _firstNameController = TextEditingController();
   var _lastNameController = TextEditingController();
   var _emailController = TextEditingController();
   var _locationController = TextEditingController();
-  var _lookingToHireController = TextEditingController();
-  var _lookingToWorkController = TextEditingController();
+  WorkStatus _workStatus;
   var _lookingToHire = false;
   var _lookingToWork = false;
-    
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -95,7 +87,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             decoration: const InputDecoration(
               hintText: 'What does your mamma call you?',
               labelText: 'First Name',
-              labelStyle: TextStyle(fontWeight: FontWeight.bold),
+              // labelStyle: TextStyle(fontWeight: FontWeight.bold),
             ),
             validator: (val) =>
                 val.trim().isNotEmpty ? null : "First Name is required",
@@ -108,7 +100,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             decoration: const InputDecoration(
               hintText: 'What is your family name?',
               labelText: 'Last Name',
-              labelStyle: TextStyle(fontWeight: FontWeight.bold),
+              // labelStyle: TextStyle(fontWeight: FontWeight.bold),
             ),
             validator: (val) =>
                 val.trim().isNotEmpty ? null : "Last Name is required",
@@ -120,41 +112,42 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             decoration: const InputDecoration(
               hintText: 'Houston, TX',
               labelText: 'Location',
-              labelStyle: TextStyle(fontWeight: FontWeight.bold),
+              // labelStyle: TextStyle(fontWeight: FontWeight.bold),
             ),
             validator: (val) =>
                 val.trim().isNotEmpty ? null : "Location is required",
           ),
-          CheckboxListTile(
-            // activeColor: Theme.of(context).accentColor,
-            secondary: Text('Hiring?'),
-            dense: true,
-            value: _lookingToHire,
-            onChanged: (bool value) => setState(() => _lookingToHire = value),
-            // subtitle: !_lookingToHire
-            //     ? Padding(
-            //         padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0),
-            //         child: Text(
-            //           'Required field',
-            //           style: TextStyle(color: Color(0xFFe53935), fontSize: 12),
-            //         ),
-            //       )
-            //     : null,
+          SizedBox(height: 15,),
+          Text("Work Status:", style: Theme.of(context).textTheme.subhead  ,),
+          RadioListTile<WorkStatus>(
+            title: const Text('Looking'),
+            value: WorkStatus.looking,
+            groupValue: _workStatus,
+            onChanged: (WorkStatus value) {
+              setState(() {
+                _workStatus = value;
+              });
+            },
           ),
-          CheckboxListTile(
-            activeColor: Theme.of(context).accentColor,
-            title: Text('Looking for work?'),
-            value: _lookingToHire,
-            onChanged: (bool value) => setState(() => _lookingToHire = value),
-            // subtitle: !_lookingToHire
-            //     ? Padding(
-            //         padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0),
-            //         child: Text(
-            //           'Required field',
-            //           style: TextStyle(color: Color(0xFFe53935), fontSize: 12),
-            //         ),
-            //       )
-            //     : null,
+          RadioListTile<WorkStatus>(
+            title: const Text('Hiring'),
+            value: WorkStatus.hiring,
+            groupValue: _workStatus,
+            onChanged: (WorkStatus value) {
+              setState(() {
+                _workStatus = value;
+              });
+            },
+          ),
+          RadioListTile<WorkStatus>(
+            title: const Text('Working'),
+            value: WorkStatus.working,
+            groupValue: _workStatus,
+            onChanged: (WorkStatus value) {
+              setState(() {
+                _workStatus = value;
+              });
+            },
           ),
         ],
       ),
