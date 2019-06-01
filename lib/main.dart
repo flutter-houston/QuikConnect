@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ProfilePage(title: 'Quik Connect Home Page'),
+      home: ProfilePage(title: 'Profile Page'),
     );
   }
 }

@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:quikconnect/user.dart';
 
 class PersonalInfoForm extends StatefulWidget {
-  PersonalInfoForm({Key key}) : super(key: key);
-
+  PersonalInfoForm({Key key, this.user}) : super(key: key);
+  final User user;
   _PersonalInfoFormState createState() => _PersonalInfoFormState();
 }
 
 enum WorkStatus { looking, hiring, working }
 
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
+  User get user => widget.user;
   var _firstNameController = TextEditingController();
   var _lastNameController = TextEditingController();
   var _emailController = TextEditingController();
   var _locationController = TextEditingController();
   WorkStatus _workStatus;
-  var _lookingToHire = false;
-  var _lookingToWork = false;
-
+@override
+  void initState() {
+    if(user != null){
+      //setup our user data for editing
+       _firstNameController.text = user.firstName ?? "";
+         _lastNameController.text= user.lastName ?? "";
+         _emailController.text= user.email ?? "";
+         _locationController.text= user.firstName ?? "";
+         _workStatus= user.workStatus ?? null;
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -25,8 +36,6 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           TextFormField(
             controller: _firstNameController,
             textCapitalization: TextCapitalization.words,
-            // initialValue: user?.firstName ?? '',  // enable this when editing and
-            // we have a user
             decoration: const InputDecoration(
               hintText: 'What does your mamma call you?',
               labelText: 'First Name',
@@ -38,8 +47,6 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
           TextFormField(
             controller: _lastNameController,
             textCapitalization: TextCapitalization.words,
-            // initialValue: user?.lastName ?? '',  // enable this when editing and
-            // we have a user
             decoration: const InputDecoration(
               hintText: 'What is your family name?',
               labelText: 'Last Name',
@@ -49,9 +56,17 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
                 val.trim().isNotEmpty ? null : "Last Name is required",
           ),
           TextFormField(
+            controller: _emailController,
+            decoration: const InputDecoration(
+              hintText: 'user@example.com',
+              labelText: 'Email',
+              // labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            validator: (val) =>
+                val.trim().isNotEmpty ? null : "Email is required",
+          ),
+          TextFormField(
             controller: _locationController,
-            // initialValue: user?.lastName ?? '',  // enable this when editing and
-            // we have a user
             decoration: const InputDecoration(
               hintText: 'Houston, TX',
               labelText: 'Location',
@@ -101,9 +116,25 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
               Text('Working'),
             ],
           ),
-          ListTile()
+          SizedBox(
+            height: 15,
+          ),
+          RaisedButton(
+            onPressed: () => _submitForm(),
+            child: Text("Save"),
+          )
         ],
       ),
     );
   }
+
+  _submitForm() {
+    var _user = User(
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        email: _emailController.text,
+        location: _locationController.text,
+        workStatus: _workStatus);
+  }
+  //TODO send this to firestore
 }
