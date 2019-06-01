@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quikconnect/personal_info_form.dart';
+import 'package:quick_connect/personal_info_form.dart';
 
 @immutable
 class User extends Equatable {

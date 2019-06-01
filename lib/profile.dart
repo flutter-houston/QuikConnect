@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quikconnect/personal_info_form.dart';
-import 'package:quikconnect/quik_connect_icons.dart';
+import 'package:quick_connect/personal_info_form.dart';
+import 'package:quick_connect/quik_connect_icons.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({Key key, this.title}) : super(key: key);

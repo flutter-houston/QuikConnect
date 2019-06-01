@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikconnect/profile.dart';
+import 'package:quick_connect/profile.dart';
 
 void main() => runApp(MyApp());
 

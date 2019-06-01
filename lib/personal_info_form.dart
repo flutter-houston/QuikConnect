@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikconnect/user.dart';
+import 'package:quick_connect/user.dart';
 
 class PersonalInfoForm extends StatefulWidget {
   PersonalInfoForm({Key key, this.user}) : super(key: key);
